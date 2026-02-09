@@ -83,4 +83,47 @@
             </form>
         </div>
     </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Data Penjualan</h4>
+        </div>
+        <div class="panel-body">
+
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>No</th>
+                    <th>Invoice</th>
+                    <th>Tanggal</th>
+                    <th>Kasir</th>
+                    <th>Total Haga</th>
+                    <th>Aksi</th>
+                </tr>
+
+                <?php
+                    $no = 1;
+                    $data = mysqli_query($koneksi,"SELECT penjualan.*, user.user_nama 
+                    FROM penjualan 
+                    JOIN user ON penjualan.user_id = user.user_id");
+                
+                    while ($d = mysqli_fetch_assoc($data)) {
+                ?>
+                <tr>
+                    <td><?= $no++; ?></td>
+                    <td><?= $d['id_jual']; ?></td>
+                    <td><?= $d['tgl_jual']; ?></td>
+                    <td><?= $d['user_nama']; ?></td>
+                    
+                    <td>Rp. <?= number_format($d['total_harga']); ?></td>
+                
+                    <td>
+                        <a href="penjualan_invoice.php?id=<?= $d['id_jual']; ?>" target="_blank" class="btn btn-sm btn-warning">Invoice</a>
+                        <a href="penjualan_edit.php?id=<?= $d['id_jual']; ?>" class="btn btn-sm btn-info">Edit</a>
+                        <a href="penjualan_batal.php?id=<?= $d['id_jual']; ?>" class="btn btn-sm btn-danger">Batalkan</a>
+                    </td>
+                </tr>
+                <?php } ?>
+            </table>
+        </div>
+    </div>
 </div>
